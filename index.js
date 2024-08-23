@@ -30,6 +30,7 @@ async function run() {
         // await client.connect();
 
         const spotsCollection = client.db('spotsDB').collection('spots');
+        const countryCollection=client.db('spotsDB').collection('country');
 
 
         app.get('/spot', async (req, res) => {
@@ -40,6 +41,12 @@ async function run() {
         })
 
         app.get('/singleTourist/:id', async (req, res) => {
+            console.log(req.params.id);
+            const result=await spotsCollection.findOne({_id:new ObjectId(req.params.id)});
+            res.send(result);
+        })
+
+        app.get('/singleSpot/:id',async(req,res)=>{
             console.log(req.params.id);
             const result=await spotsCollection.findOne({_id:new ObjectId(req.params.id)});
             res.send(result);
@@ -83,6 +90,28 @@ async function run() {
             const result = await spotsCollection.deleteOne(query);
             res.send(result);
         })
+
+
+        // country server
+     
+        app.get('/country',async(req,res) => {
+            const cursor = countryCollection.find();
+            const result = await cursor.toArray();
+            console.log(result);
+            res.send(result);
+        })
+
+
+        app.post('/country',async(req,res) => {
+            const newCountry = req.body;
+            
+            const result = await countryCollection.insertOne(newCountry);
+            res.send(result);
+        })
+
+
+
+
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
