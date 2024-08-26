@@ -38,6 +38,7 @@ async function run() {
             const result = await cursor.toArray();
             console.log(result);
             res.send(result);
+    
         })
 
         app.get('/singleTourist/:id', async (req, res) => {
