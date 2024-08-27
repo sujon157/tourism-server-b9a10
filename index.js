@@ -100,7 +100,6 @@ async function run() {
         app.get('/country',async(req,res) => {
             const cursor = countryCollection.find();
             const result = await cursor.toArray();
-            console.log(result);
             res.send(result);
         })
 
