@@ -32,7 +32,7 @@ async function run() {
         const spotsCollection = client.db('spotsDB').collection('spots');
         const countryCollection=client.db('spotsDB').collection('country');
 
-
+          // get operation
         app.get('/spot', async (req, res) => {
             const cursor = spotsCollection.find();
             const result = await cursor.toArray();
@@ -53,7 +53,7 @@ async function run() {
             res.send(result);
         })
 
-
+        // post operation
         app.post('/spot', async (req, res) => {
             const newSpots = req.body;
             console.log(newSpots);
@@ -62,7 +62,7 @@ async function run() {
             res.send(result);
         })
         
-
+        // update operation
         app.put('/updateSpot/:id', async (req, res) => {
             const id = req.params.id;
             const filter = { _id: new ObjectId(id) };
@@ -84,7 +84,8 @@ async function run() {
             const result = await spotsCollection.updateOne(filter, spot, options);
             res.send(result);
         })
-
+       
+        // delete opereration
         app.delete('/spot/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
@@ -94,7 +95,8 @@ async function run() {
 
 
         // country server
-     
+
+    //    get operation
         app.get('/country',async(req,res) => {
             const cursor = countryCollection.find();
             const result = await cursor.toArray();
@@ -102,7 +104,7 @@ async function run() {
             res.send(result);
         })
 
-
+    //    post operation
         app.post('/country',async(req,res) => {
             const newCountry = req.body;
             
