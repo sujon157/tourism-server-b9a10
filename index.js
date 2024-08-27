@@ -30,38 +30,38 @@ async function run() {
         // await client.connect();
 
         const spotsCollection = client.db('spotsDB').collection('spots');
-        const countryCollection=client.db('spotsDB').collection('country');
+        const countryCollection = client.db('spotsDB').collection('country');
 
-          // get operation
+        // get operation
         app.get('/spot', async (req, res) => {
             const cursor = spotsCollection.find();
             const result = await cursor.toArray();
             console.log(result);
             res.send(result);
-    
+
         })
 
         app.get('/singleTourist/:id', async (req, res) => {
             console.log(req.params.id);
-            const result=await spotsCollection.findOne({_id:new ObjectId(req.params.id)});
+            const result = await spotsCollection.findOne({ _id: new ObjectId(req.params.id) });
             res.send(result);
         })
 
-        app.get('/singleSpot/:id',async(req,res)=>{
+        app.get('/singleSpot/:id', async (req, res) => {
             console.log(req.params.id);
-            const result=await spotsCollection.findOne({_id:new ObjectId(req.params.id)});
+            const result = await spotsCollection.findOne({ _id: new ObjectId(req.params.id) });
             res.send(result);
         })
 
         // post operation
-        app.post('/spot',async (req, res) => {
+        app.post('/spot', async (req, res) => {
             const newSpots = req.body;
             console.log(newSpots);
             const result = await spotsCollection.insertOne(newSpots);
             console.log(result);
             res.send(result);
         })
-        
+
         // update operation
         app.put('/updateSpot/:id', async (req, res) => {
             const id = req.params.id;
@@ -84,7 +84,7 @@ async function run() {
             const result = await spotsCollection.updateOne(filter, spot, options);
             res.send(result);
         })
-       
+
         // delete opereration
         app.delete('/spot/:id', async (req, res) => {
             const id = req.params.id;
@@ -96,17 +96,17 @@ async function run() {
 
         // country server
 
-    //    get operation
-        app.get('/country',async(req,res) => {
+        //    get operation
+        app.get('/country', async (req, res) => {
             const cursor = countryCollection.find();
             const result = await cursor.toArray();
             res.send(result);
         })
 
-    //    post operation
-        app.post('/country',async(req,res) => {
+        //    post operation
+        app.post('/country', async (req, res) => {
             const newCountry = req.body;
-            
+
             const result = await countryCollection.insertOne(newCountry);
             res.send(result);
         })
