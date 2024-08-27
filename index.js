@@ -54,7 +54,7 @@ async function run() {
         })
 
         // post operation
-        app.post('/spot', async (req, res) => {
+        app.post('/spot',async (req, res) => {
             const newSpots = req.body;
             console.log(newSpots);
             const result = await spotsCollection.insertOne(newSpots);
